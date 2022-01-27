@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    let id = "6e1a975e-2dfb-4866-91b7-de247904a0ca";
+
+    fetch("http://localhost:8081/image/" + id)
+        .then(data => data.json())
+        .then(imageEntity => {
+            let fileName = imageEntity.fileName;
+
+            document.getElementById("img").setAttribute("src", "http://localhost:8081/image/file/" + fileName);
+        })
+
+
+</script>
+
+<img src="" alt="img" id="img">
+
+</body>
+</html>
