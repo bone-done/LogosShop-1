@@ -18,6 +18,8 @@ spring:
       matching-strategy: ant_path_matcher
 server:
   port: 8081
+  error:
+    include-message: always
 #logging:
 #  level:
 #    root: trace

@@ -11,13 +11,19 @@
 
 <script>
 
-    let id = "6e1a975e-2dfb-4866-91b7-de247904a0ca";
+    // let id = "6e1a975e-2dfb-4866-91b7-de247904a0ca";
 
-    fetch("http://localhost:8081/image/" + id)
+    // fetch("http://localhost:8081/image/" + id, {
+    fetch("http://localhost:8081/image/test", {
+        method: "POST",
+        headers: {
+            "Authorization": "Basic " + btoa("admin:admin")
+        }
+    })
         .then(data => data.json())
         .then(imageEntity => {
+            console.log(imageEntity)
             let fileName = imageEntity.fileName;
-
             document.getElementById("img").setAttribute("src", "http://localhost:8081/image/file/" + fileName);
         })
 

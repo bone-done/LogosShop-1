@@ -1,5 +1,6 @@
 package com.vansisto.logosshop.service.impl;
 
+import com.vansisto.logosshop.exception.NotFoundException;
 import com.vansisto.logosshop.service.FileStorageService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,41 +22,32 @@ import java.util.UUID;
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
 
-    @Value("${custom.paths.file-directory}")
-    private String customPathsFileDirectory;
-
-    private final String HOME_PATH = System.getProperty("user.home");
-    private final String FILE_SEPARATOR = System.getProperty("file.separator");
-
-    private String uploadsDir;
-
     private final Path fileStorageLocation;
 
-    public FileStorageServiceImpl(){
-        uploadsDir = HOME_PATH + FILE_SEPARATOR + "uploads";
-        log.info(customPathsFileDirectory);
+    public FileStorageServiceImpl(@Value("${custom.paths.file-directory}") String customPathsFileDirectory){
+        String uploadsDir = System.getProperty("user.home") +
+                    System.getProperty("file.separator") +
+                    customPathsFileDirectory;
 
         this.fileStorageLocation = Paths.get(uploadsDir).toAbsolutePath().normalize();
 
         try {
             Files.createDirectories(fileStorageLocation);
         } catch (IOException e){
-            log.error("Directory creation failed (" + uploadsDir + ")", e);
+            log.error("Directory creation failed ({})", uploadsDir, e);
         }
     }
 
     @SneakyThrows
     @Override
     public boolean isExists(String fileName) {
-        log.info(customPathsFileDirectory);
         Path filePath = fileStorageLocation.resolve(fileName);
         Resource resource = new UrlResource(filePath.toUri());
-        return resource.exists();    }
+        return resource.exists();
+    }
 
     @Override
     public String storeFile(MultipartFile file) {
-        log.info(customPathsFileDirectory);
-
         String fileName;
         do {
             fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename().split("\\.")[1];
@@ -65,21 +58,30 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.copy(file.getInputStream(), targetLocation);
         } catch (IOException e) {
             log.error("File copying error", e);
+            fileName = null;
         }
         return fileName;
     }
 
     @Override
     public Resource loadFileByFilename(String fileName) {
-        Path filePath = fileStorageLocation.resolve(fileName);
-        try {
-            Resource resource = new UrlResource(filePath.toUri());
-            if (resource.exists()) return resource;
-//            TODO:
-            else throw new Exception("File not found");
-        } catch (Exception e) {
-            log.error("File downloading error", e);
-        }
+//        Path filePath = fileStorageLocation.resolve(fileName);
+//        try {
+//            Resource resource = new UrlResource(filePath.toUri());
+//            if (resource.exists()) return resource;
+////            TODO:
+//            else throw new Exception("File not found");
+//        } catch (Exception e) {
+//            log.error("File downloading error", e);
+//        }
+
+        if (isExists(fileName)){
+            try{
+                return new UrlResource(fileStorageLocation.resolve(fileName).toUri());
+            } catch (MalformedURLException e) {
+                log.error("File downloading error", e);
+            }
+        } else throw new NotFoundException("File", "fileName", fileName);
         return null;
     }
 }
