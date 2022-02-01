@@ -6,7 +6,7 @@ public interface BaseService<T> {
     T create(T t);
     T update(T t);
     T delete(T t);
-    T deleteById(Long id);
+    Long deleteById(Long id);
     T getEntity(Long id);
     List<T> getAll();
 }
