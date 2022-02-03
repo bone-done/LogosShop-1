@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public UserDTO create(UserDTO userDTO) {
-        if (!Objects.isNull(userDTO.getId()) && repository.existsById(userDTO.getId()))
-            throw new AlreadyExistsException("User entity", "id", userDTO.getId());
-        return map(repository.save(map(userDTO)));
+    public UserDTO create(UserDTO dto) {
+        if (!Objects.isNull(dto.getId()) && repository.existsById(dto.getId()))
+            throw new AlreadyExistsException("User entity", "id", dto.getId());
+        return map(repository.save(map(dto)));
     }
 
     @Override

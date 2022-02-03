@@ -1,6 +1,8 @@
 package com.vansisto.logosshop;
 
+import com.vansisto.logosshop.domain.RoleDTO;
 import com.vansisto.logosshop.domain.UserDTO;
+import com.vansisto.logosshop.service.RoleService;
 import com.vansisto.logosshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,7 +17,6 @@ public class LogosShopApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -28,14 +29,22 @@ public class LogosShopApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		RoleDTO adminRole = new RoleDTO();
+		adminRole.setName("ADMIN");
+		RoleDTO userRole = new RoleDTO();
+		userRole.setName("USER");
+
 		UserDTO user = new UserDTO();
 		user.setEmail("user");
 		user.setPassword(passwordEncoder.encode("user"));
+		user.getRoles().add(userRole);
 		userService.create(user);
 
 		UserDTO admin = new UserDTO();
 		admin.setEmail("admin");
 		admin.setPassword(passwordEncoder.encode("admin"));
+		admin.getRoles().add(adminRole);
 		userService.create(admin);
+
 	}
 }
