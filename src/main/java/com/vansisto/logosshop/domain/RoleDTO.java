@@ -9,5 +9,4 @@ import java.util.Set;
 public class RoleDTO {
     private Long id;
     private String name;
-    private Set<UserDTO> users = new HashSet<>();
 }

@@ -1,12 +1,12 @@
 package com.vansisto.logosshop.repository;
 
-import com.vansisto.logosshop.entity.Role;
+import com.vansisto.logosshop.entity.UserCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(String name);
+public interface UserCountRepository extends JpaRepository<UserCount, Long> {
+    Optional<UserCount> findByUserId(Long userId);
 }

@@ -1,6 +1,7 @@
 package com.vansisto.logosshop.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface BaseService<T> {
     T create(T t);
@@ -8,5 +9,5 @@ public interface BaseService<T> {
     T delete(T t);
     Long deleteById(Long id);
     T getEntity(Long id);
-    List<T> getAll();
+    Page<T> getAll(PageRequest pageRequest);
 }

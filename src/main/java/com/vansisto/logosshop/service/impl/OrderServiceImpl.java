@@ -1,11 +1,11 @@
 package com.vansisto.logosshop.service.impl;
 
-import com.vansisto.logosshop.domain.RoleDTO;
-import com.vansisto.logosshop.entity.Role;
+import com.vansisto.logosshop.domain.UserOrderDTO;
+import com.vansisto.logosshop.entity.UserOrder;
 import com.vansisto.logosshop.exception.AlreadyExistsException;
 import com.vansisto.logosshop.exception.NotFoundException;
-import com.vansisto.logosshop.repository.RoleRepository;
-import com.vansisto.logosshop.service.RoleService;
+import com.vansisto.logosshop.repository.OrderRepository;
+import com.vansisto.logosshop.service.OrderService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,31 +15,29 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
-public class RoleServiceImpl implements RoleService {
-
+public class OrderServiceImpl implements OrderService {
     @Autowired
-    private RoleRepository repository;
+    private OrderRepository repository;
     @Autowired
     private ModelMapperUtil mapper;
-    
-    private final String ENTITY_NAME = "Role";
+    private final String ENTITY_NAME = "Order";
 
     @Override
-    public RoleDTO create(RoleDTO dto) {
+    public UserOrderDTO create(UserOrderDTO dto) {
         if (!Objects.isNull(dto.getId()) && repository.existsById(dto.getId()))
             throw new AlreadyExistsException(ENTITY_NAME, "id", dto.getId());
         return map(repository.save(map(dto)));
     }
 
     @Override
-    public RoleDTO update(RoleDTO dto) {
+    public UserOrderDTO update(UserOrderDTO dto) {
         if (Objects.isNull(dto.getId()) && !repository.existsById(dto.getId()))
             throw new NotFoundException(ENTITY_NAME, "id", dto.getId());
         return map(repository.save(map(dto)));
     }
 
     @Override
-    public RoleDTO delete(RoleDTO dto) {
+    public UserOrderDTO delete(UserOrderDTO dto) {
         repository.delete(map(dto));
         return dto;
     }
@@ -52,21 +50,30 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDTO getEntity(Long id) {
+    public UserOrderDTO getEntity(Long id) {
         return map(repository.findById(id).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", id)));
     }
 
     @Override
-    public Page<RoleDTO> getAll(PageRequest pageRequest) {
+    public Page<UserOrderDTO> getAll(PageRequest pageRequest) {
         return repository.findAll(pageRequest).map(entity -> map(entity));
     }
 
-    private RoleDTO map(Role entity) {
-        return mapper.map(entity, RoleDTO.class);
+    @Override
+    public Page<UserOrderDTO> getAllByUserId(Long userId, PageRequest pageRequest) {
+        return repository.findByUserId(userId, pageRequest).map(entity -> {
+            UserOrderDTO mappedDTO = map(entity);
+            mappedDTO.setOrderState(entity.getState());
+            return mappedDTO;
+        });
     }
 
-    private Role map(RoleDTO dto) {
-        return mapper.map(dto, Role.class);
+    private UserOrderDTO map(UserOrder entity) {
+        return mapper.map(entity, UserOrderDTO.class);
+    }
+
+    private UserOrder map(UserOrderDTO dto) {
+        return mapper.map(dto, UserOrder.class);
     }
 
 }
