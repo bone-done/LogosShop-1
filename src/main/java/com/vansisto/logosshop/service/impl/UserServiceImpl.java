@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service("applicationUserService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -138,6 +139,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void attachRoleToUserById(String role, Long userId) {
         User user = repository.findById(userId).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", userId));
         attachRoleToUser(role, user);
+    }
+
+    @Override
+    public UserDTO getByEmail(String email) {
+        UserDTO userDTO = map(repository.findByEmail(email).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "email", email)));
+        userDTO.setPassword(null);
+        return userDTO;
+    }
+
+    @Override
+    public boolean hasRole(Long userId, String roleName) {
+        User user = repository.findById(userId).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", userId));
+        Set<Role> roles = user.getRoles();
+        roles = roles.stream().filter(role -> role.getName().equalsIgnoreCase(roleName)).collect(Collectors.toSet());
+        return !roles.isEmpty();
     }
 
 
