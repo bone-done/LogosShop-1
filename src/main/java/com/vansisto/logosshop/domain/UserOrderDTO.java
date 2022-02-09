@@ -1,6 +1,6 @@
 package com.vansisto.logosshop.domain;
 
-import com.vansisto.logosshop.entity.OrderState;
+import com.vansisto.logosshop.entity.enums.OrderState;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

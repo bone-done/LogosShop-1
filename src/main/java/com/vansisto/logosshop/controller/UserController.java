@@ -59,10 +59,17 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserDTO> getById(@Positive @PathVariable Long userId, Principal principal){
-        log.info("Principal: {}", principal.toString());
-        return ResponseEntity.ok(service.getEntity(userId));
+    public ResponseEntity<?> getById(
+            @Positive @PathVariable Long userId,
+            Principal principal,
+            HttpServletRequest request){
+        UserDTO accessUser = service.getByEmail(principal.getName());
+        if (service.hasRole(accessUser.getId(), "ADMIN") || accessUser.getId() == userId)
+            return ResponseEntity.ok(service.getEntity(userId));
+        else {
+            ApiError apiError = new ApiError(403, "Forbidden", request.getServletPath());
+            return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+        }
     }
 
     @GetMapping
