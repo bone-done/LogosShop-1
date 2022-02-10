@@ -1,115 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Shop</title>
 </head>
+
 <body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="card.css">
 
-<style>
-    .wrapper {
-        width: 300px;
-        background-color: #bbb;
-        padding: 5px;
-    }
+    <div class="wrapper">
+        <header>
+            <div class="menu-item">Products</div>
+            <div class="menu-item">Users</div>
+            <div class="menu-item">Order</div>
+            <div class="menu-item">Profile</div>
+            <div class="menu-item" id="login">Login</div>
 
-    input {
-        display: block;
-        padding: 5px 10px;
-        margin: 5px;
-    }
+            <div class="menu-item info">User</div>
+            <div class="menu-item info">Count</div>
+        </header>
 
-    input#logout {
-        color: white;
-        background: linear-gradient(90deg, #da4453 0%, #89216b 100%);
-        border-radius: 5px 10px;
-    }
+        <a href="addProduct/index.html">Add product</a>
 
-    img {
-        display: block;
-        margin: auto;
-        width: 80%;
-    }
-</style>
-
-<div class="wrapper">
-    <div class="image">
-        <img src="" alt="img" id="img">
-        <label for="imageEntityId">
-            Image entity id:
-            <input type="text" id="imageEntityId">
-        </label>
-        <input type="button" value="Get image" id="getImage">
+        <main>
+        </main>
     </div>
-    <hr>
-    <div class="image-upload">
-        <input type="file" id="file">
-        <input type="button" id="uploadImage" value="Upload">
-    </div>
-    <hr>
-    <div class="logout">
-        <input type="button" id="logout" value="Logout">
-    </div>
-</div>
 
-<script>
-
-    let url = "http://localhost:8081/api/"
-
-    if (window.sessionStorage.getItem('email') === null)
-        window.location.href = "/LogosShop/front/login.html"
-
-    document.getElementById("uploadImage").addEventListener('click', () => {
-        let formData = new FormData();
-        formData.append('file', document.getElementById("file").files[0]);
-
-        fetch(url + "image?productId=1&isHeadPicture=true", {
-            method: "POST",
-            headers: {
-                "Authorization": `Basic ${btoa(
-                        window.sessionStorage.getItem('email') +
-                        ":" +
-                        window.sessionStorage.getItem('password')
-                )}`
-            },
-            body: formData
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data)
-            document.getElementById("imageEntityId").value = data.id;
-        })
-    })
-
-    document.getElementById("logout").addEventListener('click', () => {
-        window.sessionStorage.removeItem('email')
-        window.sessionStorage.removeItem('password')
-        document.location.reload()
-    })
-
-    document.getElementById("getImage").addEventListener('click', ()=>{
-        fetch(url + "image/" + document.getElementById("imageEntityId").value, {
-            headers: {
-                "Authorization": `Basic ${btoa(
-                    window.sessionStorage.getItem('email') +
-                    ":" +
-                    window.sessionStorage.getItem('password')
-                )}`
-            }
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data)
-            document.getElementById("img").setAttribute('src',
-            url + "image/file/" + data.fileName);
-        })
-    })
-
-</script>
-
-
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active">
+                <span class="page-link">
+                    2
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+    <script src="/index.js"></script>
 </body>
+
 </html>

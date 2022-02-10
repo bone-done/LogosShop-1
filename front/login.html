@@ -39,7 +39,7 @@
 
 <script>
 
-    let url = "http://localhost:8081/api/auth"
+    let url = "http://localhost:8082/api/auth"
 
     let email = document.getElementById("email");
     let password = document.getElementById("password");
@@ -55,7 +55,7 @@
                 window.sessionStorage.setItem('email', email.value)
                 window.sessionStorage.setItem('password', password.value)
 
-                window.location.href = "/LogosShop/front/index.html"
+                window.location.href = "index.html"
             } else {
                 window.sessionStorage.removeItem('email')
                 window.sessionStorage.removeItem('password')

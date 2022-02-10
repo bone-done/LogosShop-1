@@ -12,6 +12,7 @@ public class NotFoundException extends RuntimeException {
         log.error("{} not found", itemType, this);
     }
     public NotFoundException(String itemType, String identificator, Number value) {
-        new NotFoundException(itemType, identificator, String.valueOf(value));
+        super(String.format("%s with %s - %s not found", itemType, identificator, String.valueOf(value)));
+        log.error("{} not found", itemType, this);
     }
 }

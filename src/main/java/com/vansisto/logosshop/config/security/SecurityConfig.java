@@ -35,33 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                 .authorizeHttpRequests()
                     .antMatchers("/swagger-ui/**").hasRole("ADMIN")
-                    .antMatchers("/").permitAll()
-//                    .antMatchers(HttpMethod.GET, "/image/*", "/image/file/*").permitAll()
-//                    .antMatchers(HttpMethod.GET, "/image/test").hasAnyRole("USER", "ADMIN")
-//                    .antMatchers(HttpMethod.POST, "/image/test").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET,
+                                "/image/**",
+                                "/order",
+                                "/",
+                                "/product*"
+                            ).permitAll()
+                    .antMatchers(HttpMethod.POST, "/product/*").permitAll()
                 .anyRequest().authenticated().and()
-//                .formLogin();
                 .httpBasic();
     }
-
-//    @Bean
-//    @Override
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password(passwordEncoder.encode("user"))
-//                .roles("USER")
-//            .build();
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder.encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

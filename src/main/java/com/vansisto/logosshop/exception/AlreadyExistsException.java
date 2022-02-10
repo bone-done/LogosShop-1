@@ -12,6 +12,7 @@ public class AlreadyExistsException extends RuntimeException {
         log.error("{} already exists", itemType, this);
     }
     public AlreadyExistsException(String itemType, String identificator, Number value) {
-        new AlreadyExistsException(itemType, identificator, String.valueOf(value));
+        super(String.format("%s with %s - %s already exists", itemType, identificator, String.valueOf(value)));
+        log.error("{} already exists", itemType, this);
     }
 }

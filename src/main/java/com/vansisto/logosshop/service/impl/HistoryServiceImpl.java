@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ public class HistoryServiceImpl implements HistoryService {
     private final String ENTITY_NAME = "History record";
 
     @Override
+    @Transactional
     public HistoryDTO create(HistoryDTO dto) {
         if (!Objects.isNull(dto.getId()) && repository.existsById(dto.getId()))
             throw new AlreadyExistsException(ENTITY_NAME, "id", dto.getId());
@@ -30,6 +32,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
+    @Transactional
     public HistoryDTO update(HistoryDTO dto) {
         if (Objects.isNull(dto.getId()) && !repository.existsById(dto.getId()))
             throw new NotFoundException(ENTITY_NAME, "id", dto.getId());
@@ -37,12 +40,14 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
+    @Transactional
     public HistoryDTO delete(HistoryDTO dto) {
         repository.delete(map(dto));
         return dto;
     }
 
     @Override
+    @Transactional
     public Long deleteById(Long id) {
         if (!repository.existsById(id)) throw new NotFoundException(ENTITY_NAME, "id", id);
         repository.deleteById(id);

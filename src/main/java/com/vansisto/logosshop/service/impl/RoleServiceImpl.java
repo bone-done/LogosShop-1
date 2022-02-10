@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -25,6 +26,7 @@ public class RoleServiceImpl implements RoleService {
     private final String ENTITY_NAME = "Role";
 
     @Override
+    @Transactional
     public RoleDTO create(RoleDTO dto) {
         if (!Objects.isNull(dto.getId()) && repository.existsById(dto.getId()))
             throw new AlreadyExistsException(ENTITY_NAME, "id", dto.getId());
@@ -32,6 +34,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public RoleDTO update(RoleDTO dto) {
         if (Objects.isNull(dto.getId()) && !repository.existsById(dto.getId()))
             throw new NotFoundException(ENTITY_NAME, "id", dto.getId());
@@ -39,12 +42,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public RoleDTO delete(RoleDTO dto) {
         repository.delete(map(dto));
         return dto;
     }
 
     @Override
+    @Transactional
     public Long deleteById(Long id) {
         if (!repository.existsById(id)) throw new NotFoundException(ENTITY_NAME, "id", id);
         repository.deleteById(id);
