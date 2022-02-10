@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Validated
@@ -41,16 +42,18 @@ public class ImageController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ImageDTO> saveImage(@Positive @RequestParam Long productId, @RequestParam Boolean isHeadPicture, @RequestParam MultipartFile file){
+    public ResponseEntity<ImageDTO> saveImage(
+            @Positive @RequestParam Long productId,
+            @RequestParam Boolean isHeadPicture,
+            @RequestParam MultipartFile file){
         String storedFileName = fileStorageService.storeFile(file);
 
         ImageDTO dto = new ImageDTO();
         dto.setFileName(storedFileName);
         dto.setIsHeadPicture(isHeadPicture);
-        dto.setProductId(productId);
 
 
-        return ResponseEntity.ok(service.create(dto));
+        return ResponseEntity.ok(service.createForProductById(dto, productId));
     }
 
     @GetMapping("/file/{fileName}")
@@ -60,5 +63,10 @@ public class ImageController {
                 .status(HttpStatus.OK)
                 .contentType(MediaType.IMAGE_PNG)
                 .body(fileStorageService.loadFileByFilename(fileName));
+    }
+
+    @GetMapping("byProductId/{productId}")
+    public ResponseEntity<ImageDTO> getImageEntityByProductId(@Positive @NotNull @PathVariable Long productId) {
+        return ResponseEntity.ok(service.getEntityByProductId(productId));
     }
 }

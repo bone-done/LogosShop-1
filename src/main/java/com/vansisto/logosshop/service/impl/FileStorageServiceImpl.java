@@ -5,7 +5,6 @@ import com.vansisto.logosshop.service.FileStorageService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.support.MethodReplacer;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -65,16 +64,6 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public Resource loadFileByFilename(String fileName) {
-//        Path filePath = fileStorageLocation.resolve(fileName);
-//        try {
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (resource.exists()) return resource;
-////            TODO:
-//            else throw new Exception("File not found");
-//        } catch (Exception e) {
-//            log.error("File downloading error", e);
-//        }
-
         if (isExists(fileName)){
             try{
                 return new UrlResource(fileStorageLocation.resolve(fileName).toUri());

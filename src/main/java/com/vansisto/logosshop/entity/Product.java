@@ -13,8 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@ToString(exclude = {"order", "images"})
-@EqualsAndHashCode(exclude = {"order", "images"})
+//TODO: should callSuper. If product are identical, then duplicates don't save in order
+@ToString(exclude = {"order", "images"}, callSuper = true)
+@EqualsAndHashCode(exclude = {"order", "images"}, callSuper = true)
 
 @Entity
 public class Product extends BaseEntity {

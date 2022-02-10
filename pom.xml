@@ -11,7 +11,7 @@
 
 	<groupId>com.vansisto</groupId>
 	<artifactId>LogosShop</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.4.3</version>
 	<name>LogosShop</name>
 	<description>Online shop for logos</description>
 
@@ -23,6 +23,8 @@
 		<maven-surefire-plugin-version>3.0.0-M1</maven-surefire-plugin-version>
 		<junit-jupiter-api-version>5.8.2</junit-jupiter-api-version>
 		<hibernate-validator-version>7.0.2.Final</hibernate-validator-version>
+		<mockito-all-version>1.10.19</mockito-all-version>
+		<assertj-core-version>3.22.0</assertj-core-version>
 	</properties>
 
 	<dependencies>
@@ -84,16 +86,25 @@
 			<version>${junit-jupiter-api-version}</version>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate.validator</groupId>-->
-<!--			<artifactId>hibernate-validator</artifactId>-->
-<!--			<version>${hibernate-validator-version}</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate.validator</groupId>-->
-<!--			<artifactId>hibernate-validator-annotation-processor</artifactId>-->
-<!--			<version>${hibernate-validator-version}</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito-all-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj-core-version}</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>com.bonedone</groupId>
+			<artifactId>UsersGenerator-1.0-SNAPSHOT</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/UsersGenerator-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -119,6 +130,11 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.7</version>
+				<configuration>
+					<excludes>
+						<exclude>com/vansisto/logosshop/exception/ApiError.class</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

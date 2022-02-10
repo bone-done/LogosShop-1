@@ -3,7 +3,6 @@ package com.vansisto.logosshop.service;
 import com.vansisto.logosshop.domain.ImageDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ImageService {
     ImageDTO create(ImageDTO dto);
@@ -12,4 +11,6 @@ public interface ImageService {
     String deleteById(String id);
     ImageDTO getEntity(String id);
     List<ImageDTO> getAll();
+    ImageDTO createForProductById(ImageDTO dto, Long productId);
+    ImageDTO getEntityByProductId(Long productId);
 }
