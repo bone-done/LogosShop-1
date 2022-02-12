@@ -39,13 +39,16 @@
 
 <script>
 
-    let url = "http://localhost:8082/api/auth"
+    let port = 8080;
+    // let host = `http://localhost:${port}/`
+    let host = `https://logos-shop.herokuapp.com/`
+    let url = `${host}api/`;
 
     let email = document.getElementById("email");
     let password = document.getElementById("password");
 
     document.getElementById("login").addEventListener('click', () => {
-        fetch(url, {
+        fetch(url + "auth", {
             headers: {
                 "Authorization": `Basic ${btoa(email.value+":"+ password.value)}`
             }
@@ -55,7 +58,7 @@
                 window.sessionStorage.setItem('email', email.value)
                 window.sessionStorage.setItem('password', password.value)
 
-                window.location.href = "index.html"
+                window.location.href = "/LogosShop/front/index.html"
             } else {
                 window.sessionStorage.removeItem('email')
                 window.sessionStorage.removeItem('password')

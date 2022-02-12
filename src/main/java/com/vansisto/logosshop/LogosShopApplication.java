@@ -53,8 +53,8 @@ public class LogosShopApplication implements CommandLineRunner {
 //		UserDTO admin = new UserDTO();
 //		admin.setEmail("admin");
 //		admin.setPassword("admin");
-//		userService.create(admin);
-//		userService.attachRoleToUserById("ADMIN", 1l);
+//		UserDTO createdUserAdmin = userService.create(admin);
+//		userService.attachRoleToUserById("ADMIN", createdUserAdmin.getId());
 //
 //
 //
