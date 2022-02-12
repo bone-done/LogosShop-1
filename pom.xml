@@ -92,12 +92,6 @@
 			<version>${mockito-all-version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>${assertj-core-version}</version>
-			<scope>test</scope>
-		</dependency>
         <dependency>
 			<groupId>com.bonedone</groupId>
 			<artifactId>UsersGenerator-1.0-SNAPSHOT</artifactId>

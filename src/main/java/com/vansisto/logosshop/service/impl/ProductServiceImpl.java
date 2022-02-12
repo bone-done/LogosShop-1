@@ -41,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
         UserOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order", "id", orderId));
         Product product = repository.findById(productId).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", productId));
         order.getProducts().add(product);
+//        TODO: No needing to map entity to dto with ModelMapper. It can be manualy
         return map(repository.save(product));
     }
 

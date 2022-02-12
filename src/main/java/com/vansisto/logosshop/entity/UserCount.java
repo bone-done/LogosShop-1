@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Data
+//TODO: Should callSuper
 @ToString(exclude = "user")
 @EqualsAndHashCode(exclude = "user")
 
