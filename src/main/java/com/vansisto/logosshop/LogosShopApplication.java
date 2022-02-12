@@ -1,5 +1,7 @@
 package com.vansisto.logosshop;
 
+import com.vansisto.logosshop.domain.RoleDTO;
+import com.vansisto.logosshop.domain.UserDTO;
 import com.vansisto.logosshop.service.RoleService;
 import com.vansisto.logosshop.service.UserService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
@@ -51,8 +53,8 @@ public class LogosShopApplication implements CommandLineRunner {
 //		UserDTO admin = new UserDTO();
 //		admin.setEmail("admin");
 //		admin.setPassword("admin");
-//		UserDTO savedUser = userService.create(admin);
-//		userService.attachRoleToUserById("ADMIN", 2l);
+//		UserDTO createdUserAdmin = userService.create(admin);
+//		userService.attachRoleToUserById("ADMIN", createdUserAdmin.getId());
 //
 //
 //
