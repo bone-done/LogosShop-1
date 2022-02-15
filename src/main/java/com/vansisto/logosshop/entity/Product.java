@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-//TODO: should callSuper. If product are identical, then duplicates don't save in order
 @ToString(exclude = {"order", "images"}, callSuper = true)
 @EqualsAndHashCode(exclude = {"order", "images"}, callSuper = true)
 

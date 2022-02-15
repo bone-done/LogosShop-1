@@ -1,5 +1,6 @@
 package com.vansisto.logosshop;
 
+import com.bonedone.UsersGenerator;
 import com.vansisto.logosshop.domain.RoleDTO;
 import com.vansisto.logosshop.domain.UserDTO;
 import com.vansisto.logosshop.service.RoleService;
@@ -55,11 +56,11 @@ public class LogosShopApplication implements CommandLineRunner {
 //		admin.setPassword("admin");
 //		UserDTO createdUserAdmin = userService.create(admin);
 //		userService.attachRoleToUserById("ADMIN", createdUserAdmin.getId());
-//
-//
+
+
 //
 //		com.bonedone.User usersGenerated = UsersGenerator.getRandomUser();
-//		for (int i = 0; i < 5; i++){
+//		for (int i = 0; i < 15; i++){
 //			UserDTO userInCycle = new UserDTO();
 //			userInCycle.setEmail(usersGenerated.getEmail());
 //			userInCycle.setFirstName(usersGenerated.getName());

@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Page<UserDTO> getAll(PageRequest pageRequest) {
         return repository.findAll(pageRequest).map(user -> {
                     UserDTO mappedUser = map(user);
-                    mappedUser.setPassword(null);
+//                    mappedUser.setPassword(null);
                     return mappedUser;
                 });
     }

@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-//TODO: Can be other (f.e. UserWithRolesDTO = + private Set<RoleDTO> roles = new HashSet<>())
 public class UserDTO {
     private Long id;
     @NotNull(message = "Email cannot be null")

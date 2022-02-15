@@ -3,6 +3,7 @@ package com.vansisto.logosshop.service.impl;
 import com.vansisto.logosshop.domain.UserCountDTO;
 import com.vansisto.logosshop.entity.UserCount;
 import com.vansisto.logosshop.exception.AlreadyExistsException;
+import com.vansisto.logosshop.exception.NotFoundException;
 import com.vansisto.logosshop.repository.UserCountRepository;
 import com.vansisto.logosshop.util.ModelMapperUtil;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -118,17 +119,71 @@ class UserCountServiceImplTest {
         assertEquals(dto.getId(), updated.getId(), "Expected and updated id's don't match");
     }
 //
-//    @Test
-//    void delete() {
-//    }
+    @Test
+    void delete() {
+        //given
+        UserCountDTO dto = new UserCountDTO();
+        dto.setId(1l);
+
+        //then
+        UserCountDTO returned = userCountService.delete(dto);
+
+        //verify
+        verify(userCountRepository).delete(any());
+        assertEquals(dto.getId(), returned.getId());
+    }
+    @Test
+    void deleteById_Success() {
+        //given
+        UserCountDTO dto = new UserCountDTO();
+        dto.setId(1l);
+
+        //when
+        when(userCountRepository.existsById(anyLong())).thenReturn(true);
+
+        //then
+        Long deletedId = userCountService.deleteById(1l);
+
+        //verify
+        verify(userCountRepository).deleteById(any());
+        assertEquals(dto.getId(), deletedId);
+    }
+
+    @Test
+    void deleteById_ThrowsException() {
+        //given
+        UserCountDTO dto = new UserCountDTO();
+
+        //when
+        when(userCountRepository.existsById(anyLong())).thenReturn(false);
+
+        //then
+        assertThrows(NotFoundException.class, () -> {
+            userCountService.deleteById(1l);
+        });
+    }
+
+    @Test
+    void getEntity() {
+//        //given
+//        UserCount returned = new UserCount();
+//        returned.setId(1l);
+//        UserCountDTO returnedDto = new UserCountDTO();
+//        returnedDto.setId(1l);
+//        Optional<UserCount> returnedOp = Optional.of(returned);
 //
-//    @Test
-//    void deleteById() {
-//    }
+//        //when
+//        when(userCountRepository.findById(1l)).thenReturn(returnedOp);
+//        when(mapper.map(any(UserCount.class), any())).thenReturn(returnedDto);
 //
-//    @Test
-//    void getEntity() {
-//    }
+//        //then
+//        UserCountDTO dto = userCountService.getEntity(1l);
+//
+//        //verify
+//        verify(userCountRepository.findById(anyLong()));
+//        assertEquals(returned.getId(), dto.getId());
+//
+    }
 //
 //    @Test
 //    void getAll() {
