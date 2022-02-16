@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDTO getEntity(Long id) {
         User entity = repository.findById(id).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", id));
         UserDTO returnedUser = map(entity);
-        returnedUser.setPassword(null);
+//        returnedUser.setPassword(null);
         return returnedUser;
     }
 
