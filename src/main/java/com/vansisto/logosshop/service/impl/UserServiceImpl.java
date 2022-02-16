@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User createdUser = repository.save(userToSave);
 
         UserDTO createdUserDTO = map(createdUser);
-        createdUserDTO.setPassword(null);
         return createdUserDTO;
     }
 
@@ -88,7 +87,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (Objects.isNull(dto.getId()) && !repository.existsById(dto.getId()))
             throw new NotFoundException(ENTITY_NAME, "id", dto.getId());
         UserDTO updatedUser = map(repository.save(map(dto)));
-        updatedUser.setPassword(null);
         return updatedUser;
     }
 
@@ -111,7 +109,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDTO getEntity(Long id) {
         User entity = repository.findById(id).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", id));
         UserDTO returnedUser = map(entity);
-//        returnedUser.setPassword(null);
         return returnedUser;
     }
 
@@ -119,7 +116,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Page<UserDTO> getAll(PageRequest pageRequest) {
         return repository.findAll(pageRequest).map(user -> {
                     UserDTO mappedUser = map(user);
-//                    mappedUser.setPassword(null);
                     return mappedUser;
                 });
     }
@@ -130,7 +126,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role roleTmp = roleRepository.findByName(role).orElseThrow(() -> new NotFoundException("Role", "name", role));
         user.getRoles().add(roleTmp);
         UserDTO savedUser = map(repository.save(user));
-        savedUser.setPassword(null);
         return savedUser;
     }
 
@@ -144,7 +139,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDTO getByEmail(String email) {
         UserDTO userDTO = map(repository.findByEmail(email).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "email", email)));
-        userDTO.setPassword(null);
         return userDTO;
     }
 
