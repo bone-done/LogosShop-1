@@ -25,7 +25,8 @@ public class ProductServiceImpl implements ProductService {
     private OrderRepository orderRepository;
     @Autowired
     private ModelMapperUtil mapper;
-    private final String ENTITY_NAME = "Product";
+
+    private static final String ENTITY_NAME = "Product";
 
     @Override
     @Transactional
@@ -37,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDTO createByProductIdInOrderById(Long productId, Long orderId) {
+    public ProductDTO attachProductByIdToOrderById(Long productId, Long orderId) {
         UserOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order", "id", orderId));
         Product product = repository.findById(productId).orElseThrow(() -> new NotFoundException(ENTITY_NAME, "id", productId));
         order.getProducts().add(product);
@@ -74,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductDTO> getAll(PageRequest pageRequest) {
-        return repository.findAll(pageRequest).map(entity -> map(entity));
+        return repository.findAll(pageRequest).map(this::map);
     }
 
     private ProductDTO map(Product entity) {

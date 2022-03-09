@@ -23,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private ModelMapperUtil mapper;
     
-    private final String ENTITY_NAME = "Role";
+    private static final String ENTITY_NAME = "Role";
 
     @Override
     @Transactional
@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Page<RoleDTO> getAll(PageRequest pageRequest) {
-        return repository.findAll(pageRequest).map(entity -> map(entity));
+        return repository.findAll(pageRequest).map(this::map);
     }
 
     private RoleDTO map(Role entity) {

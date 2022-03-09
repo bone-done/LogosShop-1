@@ -20,7 +20,7 @@ public class AuthController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity auth(Principal principal){
-        log.info("User was logged in : ", principal.toString());
+        log.info("User {} was authenticated", principal.getName());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

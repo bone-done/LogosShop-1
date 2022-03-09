@@ -21,7 +21,7 @@ public class HistoryServiceImpl implements HistoryService {
     private HistoryRepository repository;
     @Autowired
     private ModelMapperUtil mapper;
-    private final String ENTITY_NAME = "History record";
+    private static final String ENTITY_NAME = "History record";
 
     @Override
     @Transactional
@@ -61,7 +61,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public Page<HistoryDTO> getAll(PageRequest pageRequest) {
-        return repository.findAll(pageRequest).map(entity -> map(entity));
+        return repository.findAll(pageRequest).map(this::map);
     }
 
     private HistoryDTO map(History entity) {

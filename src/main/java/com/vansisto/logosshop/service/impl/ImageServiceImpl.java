@@ -23,7 +23,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private ProductRepository productRepository;
     
-    private final String ENTITY_NAME = "Image entity";
+    private static final String ENTITY_NAME = "Image entity";
 
     @Autowired
     private ModelMapperUtil mapper;
