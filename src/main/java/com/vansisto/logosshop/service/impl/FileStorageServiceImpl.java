@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Slf4j
@@ -49,7 +50,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     public String storeFile(MultipartFile file) {
         String fileName;
         do {
-            fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename().split("\\.")[1];
+            fileName = UUID.randomUUID().toString() + "." +
+                    Arrays.stream(file.getOriginalFilename().split("\\.")).reduce((f, s) -> s).orElseThrow( () ->
+                                new RuntimeException("Unable to get original file format")
+                    );
         } while (isExists(fileName));
 
         Path targetLocation = fileStorageLocation.resolve(fileName);
