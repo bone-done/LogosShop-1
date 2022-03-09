@@ -13,12 +13,12 @@ import java.util.Set;
 
 @Data
 @ToString(exclude = {"order"})
-@EqualsAndHashCode(exclude = {"order"})
+@EqualsAndHashCode(exclude = {"order"}, callSuper = true)
 
 @Entity
 public class History extends BaseEntity {
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     @OneToMany(mappedBy = "history", fetch = FetchType.LAZY)
     private Set<UserOrder> order;

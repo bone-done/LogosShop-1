@@ -22,7 +22,7 @@ public class UserCountServiceImpl implements UserCountService {
     private UserCountRepository repository;
     @Autowired
     private ModelMapperUtil mapper;
-    private final String ENTITY_NAME = "User count";
+    private static final String ENTITY_NAME = "User count";
 
     @Override
     @Transactional
@@ -62,7 +62,7 @@ public class UserCountServiceImpl implements UserCountService {
 
     @Override
     public Page<UserCountDTO> getAll(PageRequest pageRequest) {
-        return repository.findAll(pageRequest).map(entity -> map(entity));
+        return repository.findAll(pageRequest).map(this::map);
     }
 
     @Override

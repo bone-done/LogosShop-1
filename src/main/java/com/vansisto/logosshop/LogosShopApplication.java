@@ -1,8 +1,5 @@
 package com.vansisto.logosshop;
 
-import com.bonedone.UsersGenerator;
-import com.vansisto.logosshop.domain.RoleDTO;
-import com.vansisto.logosshop.domain.UserDTO;
 import com.vansisto.logosshop.service.RoleService;
 import com.vansisto.logosshop.service.UserService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
@@ -29,9 +26,6 @@ public class LogosShopApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogosShopApplication.class, args);
-
-//		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-//		System.out.println(passwordEncoder.encode("pass"));
 	}
 
 	@Override
@@ -56,19 +50,5 @@ public class LogosShopApplication implements CommandLineRunner {
 //		admin.setPassword("admin");
 //		UserDTO createdUserAdmin = userService.create(admin);
 //		userService.attachRoleToUserById("ADMIN", createdUserAdmin.getId());
-
-
-//
-//		com.bonedone.User usersGenerated = UsersGenerator.getRandomUser();
-//		for (int i = 0; i < 15; i++){
-//			UserDTO userInCycle = new UserDTO();
-//			userInCycle.setEmail(usersGenerated.getEmail());
-//			userInCycle.setFirstName(usersGenerated.getName());
-//			userInCycle.setLastName(usersGenerated.getFullName());
-//			userInCycle.setPassword(usersGenerated.getName());
-//			userService.create(userInCycle);
-//			usersGenerated = UsersGenerator.getRandomUser();
-//		}
-
 	}
 }

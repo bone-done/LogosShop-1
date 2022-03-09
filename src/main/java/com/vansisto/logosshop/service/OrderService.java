@@ -9,4 +9,5 @@ public interface OrderService extends BaseService<UserOrderDTO> {
     boolean existsForUserByEmail(String email);
     UserOrderDTO createForUser(UserOrderDTO orderDTO, String userEmail);
     UserOrderDTO getByUserEmail(String email);
+    UserOrderDTO payAndCloseForUser(String email);
 }

@@ -11,7 +11,7 @@
 
 	<groupId>com.vansisto</groupId>
 	<artifactId>LogosShop</artifactId>
-	<version>0.4.6</version>
+	<version>0.4.8</version>
 	<name>LogosShop</name>
 	<description>Online shop for logos</description>
 
@@ -91,13 +91,6 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito-all-version}</version>
 			<scope>test</scope>
-		</dependency>
-        <dependency>
-			<groupId>com.bonedone</groupId>
-			<artifactId>UsersGenerator-1.0-SNAPSHOT</artifactId>
-			<version>1.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/UsersGenerator-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 	</dependencies>
 

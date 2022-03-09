@@ -70,7 +70,7 @@ class Card {
   }
 }
 
-document.getElementById("login").addEventListener("click", (e) => {
+document.getElementById("login").addEventListener("click", () => {
   console.log("debug");
   window.location.href = "/LogosShop/front/login.html";
 });
@@ -89,9 +89,9 @@ fetch(url + "product")
       let orderImageEl = document.querySelector(
         `#cardId-${product.id} #order-image`
       );
-      orderImageEl.addEventListener("click", e => {
+      orderImageEl.addEventListener("click", () => {
         fetch(url + `product/${product.id}`, {
-          method: "POST",
+          method: "PUT",
           headers: {
             Authorization: `Basic ${btoa(
               window.sessionStorage.getItem("email") +

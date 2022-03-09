@@ -184,12 +184,4 @@ class UserCountServiceImplTest {
 //        assertEquals(returned.getId(), dto.getId());
 //
     }
-//
-//    @Test
-//    void getAll() {
-//    }
-//
-//    @Test
-//    void getByUserId() {
-//    }
 }

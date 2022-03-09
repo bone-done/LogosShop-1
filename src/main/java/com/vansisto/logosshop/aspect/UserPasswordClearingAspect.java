@@ -8,8 +8,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Slf4j
 @Aspect
 @Component

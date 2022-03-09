@@ -11,8 +11,6 @@ import com.vansisto.logosshop.repository.UserCountRepository;
 import com.vansisto.logosshop.repository.UserRepository;
 import com.vansisto.logosshop.service.UserService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,8 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,9 +32,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final ModelMapperUtil mapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserCountRepository userCountRepository;
 
-    private final String ENTITY_NAME = "User entity";
+    private static final String ENTITY_NAME = "User entity";
 
     @Autowired
     public UserServiceImpl(
@@ -51,7 +46,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.mapper = mapper;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.userCountRepository = userCountRepository;
     }
 
     @Override
@@ -61,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .roles(user.getRoles().stream().map(r -> r.getName()).toArray(String[]::new))
+                .roles(user.getRoles().stream().map(Role::getName).toArray(String[]::new))
             .build();
     }
 

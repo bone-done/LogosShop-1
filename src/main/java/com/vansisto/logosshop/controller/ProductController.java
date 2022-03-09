@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,7 @@ public class ProductController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product){
+        log.info("Creating product: {} ...", product.toString());
         return ResponseEntity.ok(service.create(product));
     }
 
@@ -43,19 +45,24 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize
     ){
+        log.info("Getting all products...");
         return ResponseEntity.ok(service.getAll(PageRequest.of(page, pageSize)));
     }
 
-    @PostMapping("{productId}")
-    public ResponseEntity<ProductDTO> createOrder(
+    @PutMapping("{productId}")
+    public ResponseEntity<ProductDTO> attachProductToCurrentOrder(
             @PathVariable Long productId,
             Principal principal){
-        boolean exists = orderService.existsForUserByEmail(principal.getName());
+        boolean isOrderExistsForCurrentUser = orderService.existsForUserByEmail(principal.getName());
 
-        UserOrderDTO dto = null;
-        if (!exists) dto = orderService.createForUser(new UserOrderDTO(), principal.getName());
-        else dto = orderService.getByUserEmail(principal.getName());
+        UserOrderDTO orderDTO;
+        if (!isOrderExistsForCurrentUser) {
+            log.info("Opened order doesn't exist. Creating new order for current user: {}", principal.getName());
+            orderDTO = orderService.createForUser(new UserOrderDTO(), principal.getName());
+        }
+        else orderDTO = orderService.getByUserEmail(principal.getName());
 
-        return ResponseEntity.ok(service.createByProductIdInOrderById(productId, dto.getId()));
+        log.info("Attaching product: {} to order: {}", productId, orderDTO.getId());
+        return ResponseEntity.ok(service.attachProductByIdToOrderById(productId, orderDTO.getId()));
     }
 }
