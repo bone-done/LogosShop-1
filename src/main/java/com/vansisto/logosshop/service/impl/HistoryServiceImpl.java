@@ -2,23 +2,31 @@ package com.vansisto.logosshop.service.impl;
 
 import com.vansisto.logosshop.domain.HistoryDTO;
 import com.vansisto.logosshop.entity.History;
+import com.vansisto.logosshop.entity.UserOrder;
 import com.vansisto.logosshop.exception.AlreadyExistsException;
 import com.vansisto.logosshop.exception.NotFoundException;
 import com.vansisto.logosshop.repository.HistoryRepository;
+import com.vansisto.logosshop.repository.OrderRepository;
 import com.vansisto.logosshop.service.HistoryService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
     @Autowired
     private HistoryRepository repository;
+    @Autowired
+    private OrderRepository orderRepository;
     @Autowired
     private ModelMapperUtil mapper;
     private static final String ENTITY_NAME = "History record";
@@ -62,6 +70,15 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public Page<HistoryDTO> getAll(PageRequest pageRequest) {
         return repository.findAll(pageRequest).map(this::map);
+    }
+
+    @Override
+    public Page<HistoryDTO> getAllByUserId(Long userId, PageRequest pageRequest) {
+        List<UserOrder> userOrders= orderRepository.findByUserId(userId, pageRequest).getContent();
+        List<HistoryDTO> historyList = userOrders.stream()
+                .map(uo -> map(uo.getHistory()))
+                .collect(Collectors.toList());
+        return new PageImpl<>(historyList);
     }
 
     private HistoryDTO map(History entity) {
