@@ -59,16 +59,16 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<?> getById(
+    public ResponseEntity getById(
             @Positive @PathVariable Long userId,
             Principal principal,
             HttpServletRequest request){
         UserDTO accessUser = service.getByEmail(principal.getName());
-        if (service.hasRole(accessUser.getId(), "ADMIN") || accessUser.getId() == userId)
+        if (service.hasRole(accessUser.getId(), "ADMIN") || accessUser.getId().equals(userId))
             return ResponseEntity.ok(service.getEntity(userId));
         else {
             ApiError apiError = new ApiError(403, "Forbidden", request.getServletPath());
-            return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+            return new ResponseEntity(apiError, HttpStatus.FORBIDDEN);
         }
     }
 

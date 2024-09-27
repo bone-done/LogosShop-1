@@ -1,11 +1,5 @@
 package com.vansisto.logosshop;
 
-import com.bonedone.UsersGenerator;
-import com.vansisto.logosshop.domain.RoleDTO;
-import com.vansisto.logosshop.domain.UserDTO;
-import com.vansisto.logosshop.domain.UserOrderDTO;
-import com.vansisto.logosshop.entity.User;
-import com.vansisto.logosshop.entity.UserOrder;
 import com.vansisto.logosshop.service.RoleService;
 import com.vansisto.logosshop.service.UserService;
 import com.vansisto.logosshop.util.ModelMapperUtil;
@@ -32,46 +26,29 @@ public class LogosShopApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogosShopApplication.class, args);
-
-//		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-//		System.out.println(passwordEncoder.encode("pass"));
 	}
 
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-//		TODO: Remove it
-		RoleDTO adminRole = new RoleDTO();
-		adminRole.setName("ADMIN");
-		roleService.create(adminRole);
-
-		RoleDTO userRole = new RoleDTO();
-		userRole.setName("USER");
-		roleService.create(userRole);
-
-		UserDTO user = new UserDTO();
-		user.setEmail("user");
-		user.setPassword("user");
-		UserDTO saved = userService.create(user);
-
-		UserDTO admin = new UserDTO();
-		admin.setEmail("admin");
-		admin.setPassword("admin");
-		UserDTO savedUser = userService.create(admin);
-		userService.attachRoleToUserById("ADMIN", 2l);
-
-
-
-		com.bonedone.User usersGenerated = UsersGenerator.getRandomUser();
-		for (int i = 0; i < 5; i++){
-			UserDTO userInCycle = new UserDTO();
-			userInCycle.setEmail(usersGenerated.getEmail());
-			userInCycle.setFirstName(usersGenerated.getName());
-			userInCycle.setLastName(usersGenerated.getFullName());
-			userInCycle.setPassword(usersGenerated.getName());
-			userService.create(userInCycle);
-			usersGenerated = UsersGenerator.getRandomUser();
-		}
-
+////		TODO: Remove it
+//		RoleDTO adminRole = new RoleDTO();
+//		adminRole.setName("ADMIN");
+//		roleService.create(adminRole);
+//
+//		RoleDTO userRole = new RoleDTO();
+//		userRole.setName("USER");
+//		roleService.create(userRole);
+//
+//		UserDTO user = new UserDTO();
+//		user.setEmail("user");
+//		user.setPassword("user");
+//		UserDTO saved = userService.create(user);
+//
+//		UserDTO admin = new UserDTO();
+//		admin.setEmail("admin");
+//		admin.setPassword("admin");
+//		UserDTO createdUserAdmin = userService.create(admin);
+//		userService.attachRoleToUserById("ADMIN", createdUserAdmin.getId());
 	}
 }

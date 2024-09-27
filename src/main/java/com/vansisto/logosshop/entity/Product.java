@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@ToString(exclude = {"order", "images"})
-@EqualsAndHashCode(exclude = {"order", "images"})
+@ToString(exclude = {"order", "images"}, callSuper = true)
+@EqualsAndHashCode(exclude = {"order", "images"}, callSuper = true)
 
 @Entity
 public class Product extends BaseEntity {

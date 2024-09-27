@@ -21,7 +21,6 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"user", "history", "products"})
 
 @Entity
-//TODO: Why it didn't work? Table cannot be named as "Order", because it's reserved word in mysql
 public class UserOrder extends BaseEntity {
     @NotNull
     private OrderState state = OrderState.OPENED;

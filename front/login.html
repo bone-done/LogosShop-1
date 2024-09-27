@@ -39,13 +39,16 @@
 
 <script>
 
-    let url = "http://localhost:8081/api/auth"
+    let port = 8080;
+    // let host = `http://localhost:${port}/`
+    let host = `https://logos-shop.herokuapp.com/`
+    let url = `${host}api/`;
 
     let email = document.getElementById("email");
     let password = document.getElementById("password");
 
     document.getElementById("login").addEventListener('click', () => {
-        fetch(url, {
+        fetch(url + "auth", {
             headers: {
                 "Authorization": `Basic ${btoa(email.value+":"+ password.value)}`
             }
